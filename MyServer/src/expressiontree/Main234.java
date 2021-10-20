@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package expressiontree;
-import java.util.Stack;
+/*
+
 /**
  *
  * @author jose
  */
+/*
+package expressiontree;
+import java.util.Stack;
 public class Main234 {
    // Function to evaluate a given postfix expression
    public static int evalPostfix(String[] exp)
@@ -79,3 +82,4 @@ public class Main234 {
    }
  
 }
+*/
