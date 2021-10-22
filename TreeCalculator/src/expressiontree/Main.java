@@ -18,12 +18,27 @@ public class Main {
     static int decider;
     static char checker;
     static Node root = null;
+    static int precedence(char c){
+        switch (c){
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+            case '%':
+                return 2;
+            case '^':
+                return 3;
+        }
+        return -1;
+    }
 
     public static void main(String[] args) {
 
         // Create the expression string
-        String expressionString = "( ( 13 + 15 ) * 5 - 1 ) * 5"; //[] [32+3*5+][5 3 * 5 +][15 5 +][20]
+        String expressionString = "5*3/8+(95%5–10)"; //[] [32+3*5+][5 3 * 5 +][15 5 +][20]       //5 * 3 / 8 + ( 95 % 5 – 10 )
         String exp = "13 15 + 5 * 1 - 5 *";
+        String[] exp2 = exp.split(" ");
         // Convert it to a character array and call it 'infix'
         
 
@@ -31,18 +46,44 @@ public class Main {
         // function to create the postfix form of the expression
         String postfix = inf2postf(expressionString);
         System.out.println("Infix : " + expressionString);
-        System.out.println("Postfix : " + postfix);
-        String[] postfixeval = postfix.split(" ");
+        System.out.println("Postfix :" + postfix);
         
-        System.out.println(evalPostfix(postfixeval));
-       // String[] postfixeval = postfix.split(" ");
-        //System.out.println(postfixeval[0]);
-        //System.out.println(evalPostfix(postfixeval));
+        String pel = postfix.replaceAll("\\s+", " ");
+        String[] postfixeval  = pel.split(" ");
+        String[] modifiedArray = Arrays.copyOfRange(postfixeval, 1, postfixeval.length);
+        //String[] modifiedArray2 = Arrays.copyOfRange(modifiedArray, 1, modifiedArray.length);
+        System.out.println("El resultado es: "+evalPostfix(modifiedArray));
+        /*
+        if(postfixeval[0]== " " && postfixeval[postfixeval.length-1] == " "){
+            String[] modifiedArray = Arrays.copyOfRange(postfixeval, 1, postfixeval.length);
+            String[] finalpostfix = Arrays.copyOfRange(modifiedArray, 0, modifiedArray.length-1);
+            System.out.println("El resultado es: "+evalPostfix(finalpostfix));
+            
+        }else if(postfixeval[0]== " "){
+            String[] modifiedArray = Arrays.copyOfRange(postfixeval, 1, postfixeval.length);
+            System.out.println("El resultado es: "+evalPostfix(modifiedArray));
+        }else if(postfixeval[postfixeval.length-1] == " "){
+            String[] finalpostfix = Arrays.copyOfRange(postfixeval, 0, postfixeval.length-1);
+        }else{
+            System.out.println("El resultado es: "+evalPostfix(postfixeval));
+            System.out.println("El resultado es: ");
+
+        }
+        */
+       
+        /*
+        String[] modifiedArray = Arrays.copyOfRange(postfixeval, 1, postfixeval.length);
+        System.out.println("El resultado es: "+evalPostfix(postfixeval));
+        */
+        
+        
+        
+        
         
 
     }
     // Function to evaluate a given postfix expression
-   public static int evalPostfix(String[] exp)
+   public static Double evalPostfix(String[] exp)
    {
       // base case
       if (exp == null || exp.length ==0 ) {
@@ -50,22 +91,22 @@ public class Main {
       }
 
       // create an empty stack
-      Stack<Integer> stack = new Stack<>();
+      Stack<Double> stack = new Stack<>();
 
       // traverse the given expression
-      for (int i = 0; i < exp.length-1;i++)
+      for (int i = 0; i < exp.length;i++)
       {
          // if the current character is an operand, push it into the stack
          if (isNumeric(exp[i])) {
 
-            stack.push(Integer.parseInt(exp[i]));
+            stack.push(Double.parseDouble(exp[i]));
          }
          // if the current character is an operator
          else {
             // remove the top two elements from the stack
 
-            int x = stack.pop();
-            int y = stack.pop();
+            double x = stack.pop();
+            double y = stack.pop();
             //String y = stack.pop();
 
             // evaluate the expression 'x op y', and push the
@@ -81,6 +122,8 @@ public class Main {
             }
             else if (exp[i].contains("/")) {
                stack.push(y / x);
+            }else if(exp[i].contains("%")){
+                stack.push(y % x);
             }
             else{
                 System.out.println("No funka");
@@ -104,51 +147,39 @@ public class Main {
       }
       return true;
    }
-
+   
 
     // function to convert postfix to infix
-    private static String inf2postf(String infix) {
+    private static String inf2postf(String expression) {
 
-        String postfix = "";
-        Stack<Character> operator = new Stack<Character>();
-        char popped;
+        String result = "";
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i <expression.length() ; i++) {
+            char c = expression.charAt(i);
 
-        for (int i = 0; i < infix.length(); i++) {
-
-            char get = infix.charAt(i);
-
-            if (!isOperator(get))
-                postfix += get;
-
-            else if (get == ')')
-                while ((popped = operator.pop()) != '(')
-                    postfix += popped;
-
-            else {
-                while (!operator.isEmpty() && get != '(' && precedence(operator.peek()) >= precedence(get))
-                    postfix += operator.pop();
-
-                operator.push(get);
+            //check if char is operator
+            if(precedence(c)>0){
+                while(stack.isEmpty()==false && precedence(stack.peek())>=precedence(c)){
+                    result += stack.pop();
+                }
+                stack.push(c);
+            }else if(c==')'){
+                char x = stack.pop();
+                while(x!='('){
+                    result += x;
+                    x = stack.pop();
+                }
+            }else if(c=='('){
+                stack.push(c);
+            }else{
+                //character is neither operator nor ( 
+                result += c;
             }
         }
-        // pop any remaining operator
-        while (!operator.isEmpty())
-            postfix += operator.pop();
-
-        return postfix;
-    }
-
-    private static boolean isOperator(char i) {
-        return precedence(i) > 0;
-    }
-
-    private static int precedence(char i) {
-
-        if (i == '(' || i == ')') return 1;
-        else if (i == '-' || i == '+') return 2;
-        else if (i == '*' || i == '/') return 3;
-        else return 0;
-    }
+        for (int i = 0; i <=stack.size() ; i++) {
+            result += stack.pop();
+        }
+        return result;
 
 }
 
@@ -166,4 +197,5 @@ class Node {
     Node(char data) {
         this.data = data;
     }
+}
 }
