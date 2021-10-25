@@ -65,8 +65,12 @@ public class Myclient extends javax.swing.JFrame {
                             }
                         }
 
-                    } else {
-                        msgBox.append("" + m + "\n");
+                    }else if(m.contains("recibo")){
+                        m = m.substring(6);
+                        msgBox.append("El resultado es: "+ m+"\n");
+                    }
+                        else {
+                        //msgBox.append("" + m + "\n");
                     }
                 } catch (Exception ex) {
                     break;
@@ -211,7 +215,7 @@ public class Myclient extends javax.swing.JFrame {
             try {
                 String m = sendText.getText(), mm = m;//hola
 
-                dout.writeUTF("12345678" + m + ":" + ID);//hola soy jose
+                dout.writeUTF("12345678" + ID + ":" + m);//hola soy jose
                 sendText.setText("");
                 msgBox.append("< YOU to All > " + mm + "\n");
 

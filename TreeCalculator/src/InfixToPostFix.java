@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package newpackage;
+
 
 /**
  *
@@ -125,7 +125,7 @@ public class InfixToPostFix {
       return true;
    }
     public static void main(String[] args) {
-        String exp = "( 5 * ( 10 - 15 ) ) + 7 ";                                            //( 5 * 7 ) + ( 12 / 6 )        //5 * 3 / 8 + ( 95 % 5 - 10 ) 
+        String exp = "5 * 3 / 8 + ( 95 % 5 - 10 )"+" ";                                            //( 5 * 7 ) + ( 12 / 6 )        //5 * 3 / 8 + ( 95 % 5 - 10 ) 
         System.out.println("Infix Expression: " + exp);
         System.out.println("Postfix Expression: " + infixToPostFix(exp));
         

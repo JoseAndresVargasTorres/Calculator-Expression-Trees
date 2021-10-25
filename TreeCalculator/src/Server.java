@@ -1,4 +1,5 @@
 
+
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -14,7 +15,6 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.*;
 import javax.swing.JOptionPane;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -77,7 +77,12 @@ public class Server extends javax.swing.JFrame {
             this.s=s;
             this.ID=ID;
         }
+        
+                        
+        
         public void run(){
+            
+    
             while (!clientColl.isEmpty()) {
                 try {
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -85,18 +90,39 @@ public class Server extends javax.swing.JFrame {
                     String filepath = "Datos.csv";
                     
                     String input = new DataInputStream(s.getInputStream()).readUTF();
+                    DataOutputStream output =new DataOutputStream(s.getOutputStream());
                     String expresion = input;
                     System.out.println(expresion);
+                    
+                    
                     if (input.contains("12345678")) {
                         input = input.substring(8);
                         List<String> realinput = Arrays.asList(input.split(":"));                        
-                        msgBox.append("< El cliente " + realinput.get(1) + ", quiere calcular la siguiente expresión> " + realinput.get(0)+"\n");
+                        msgBox.append("< El cliente " + realinput.get(0) + ", quiere calcular la siguiente expresión> " + realinput.get(1)+"\n");
+                        String infix  = realinput.get(1)+ " ";
+                        String exp2 = infixToPostFix(infix);
+                        String pel = exp2.replaceAll("\\s+", " ");
+                        String[] exparray = pel.split(" ");
+                        if(exparray[0]== ""){
+                            System.out.println("hola");
+                            String[] modifiedArray = Arrays.copyOfRange(exparray, 1, exparray.length);
+                            String result = Double.toString(evalPostfix(modifiedArray));
+                            output.writeUTF("recibo"+result);
+                        }else{
+                            String result = Double.toString(evalPostfix(exparray));
+                            output.writeUTF("recibo"+result);
+                        }        
+                        
                         
                         //Save in the CSV document the information received 
-                        saveRecord(date,realinput.get(1),realinput.get(0),filepath);
+                        saveRecord(date,realinput.get(0),realinput.get(1),filepath);
                         //la parte de los arboles expresion
                         Set k = clientColl.keySet();
                         //System.out.println(k);
+                        
+                        
+                        
+                        
                         Iterator itr = k.iterator();
                         while (itr.hasNext()) {
                             String key = (String) itr.next();
@@ -188,7 +214,115 @@ public class Server extends javax.swing.JFrame {
         }
     }
     
+    static int precedence(char c){
+        switch (c){
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+            case '%':
+                return 2;
+            case '^':
+                return 3;
+        }
+        return -1;
+    }
+    static String infixToPostFix(String expression){
+
+        String result = "";
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i <expression.length() ; i++) {
+            char c = expression.charAt(i);
+
+            //check if char is operator
+            if(precedence(c)>0){
+                while(stack.isEmpty()==false && precedence(stack.peek())>=precedence(c)){
+                    result += stack.pop();
+                }
+                stack.push(c);
+            }else if(c==')'){
+                char x = stack.pop();
+                while(x!='('){
+                    result += x;
+                    x = stack.pop();
+                }
+            }else if(c=='('){
+                stack.push(c);
+            }else{
+                //character is neither operator nor ( 
+                result += c;
+            }
+        }
+        for (int i = 0; i <=stack.size() ; i++) {
+            result += stack.pop();
+        }
+        return result;
+    }
+    static Double evalPostfix(String[] exp)
+   {
+      // base case
+      if (exp == null || exp.length ==0 ) {
+         System.exit(-1);
+      }
+
+      // create an empty stack
+      Stack<Double> stack = new Stack<>();
+
+      // traverse the given expression
+      for (int i = 0; i < exp.length;i++)
+      {
+         // if the current character is an operand, push it into the stack
+         if (isNumeric(exp[i])) {
+
+            stack.push(Double.parseDouble(exp[i]));
+         }
+         // if the current character is an operator
+         else {
+            // remove the top two elements from the stack
+
+            double x = stack.pop();
+            double y = stack.pop();
+            //String y = stack.pop();
+
+            // evaluate the expression 'x op y', and push the
+            // result back to the stack
+            if (exp[i].contains("+")) {
+               stack.push(y + x);
+            }
+            else if (exp[i].contains("-")) {
+               stack.push(y - x);
+            }
+            else if (exp[i].contains("*")) {
+               stack.push(y * x);
+            }
+            else if (exp[i].contains("/")) {
+               stack.push(y / x);
+            }else if(exp[i].contains("%")){
+                stack.push(y % x);
+            }
+            else{
+                System.out.println("No funka");
+            }
+         }
+      }
+
+      // At this point, the stack is left with only one element, i.e.,
+      // expression result
+      return stack.pop();
+   }
     
+    static boolean isNumeric(String strNum) {
+      if (strNum == null) {
+         return false;
+      }
+      try {
+         double d = Double.parseDouble(strNum);
+      } catch (NumberFormatException nfe) {
+         return false;
+      }
+      return true;
+   }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -297,4 +431,6 @@ public class Server extends javax.swing.JFrame {
     private javax.swing.JTextArea msgBox;
     private javax.swing.JLabel sStatus;
     // End of variables declaration//GEN-END:variables
+
+
 }
