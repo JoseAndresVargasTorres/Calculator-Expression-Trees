@@ -240,7 +240,7 @@ public class Server extends javax.swing.JFrame {
             //check if char is operator
             if(precedence(c)>0){
                 while(stack.isEmpty()==false && precedence(stack.peek())>=precedence(c)){
-                    result += stack.pop();
+                    result = result + " "+ stack.pop();
                 }
                 stack.push(c);
             }else if(c==')'){
@@ -257,7 +257,7 @@ public class Server extends javax.swing.JFrame {
             }
         }
         for (int i = 0; i <=stack.size() ; i++) {
-            result += stack.pop();
+            result = result + " " +stack.pop();
         }
         return result;
     }

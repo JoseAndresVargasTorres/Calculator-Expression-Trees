@@ -39,7 +39,7 @@ public class InfixToPostFix {
             //check if char is operator
             if(precedence(c)>0){
                 while(stack.isEmpty()==false && precedence(stack.peek())>=precedence(c)){
-                    result += stack.pop();
+                    result = result + " " + stack.pop();
                 }
                 stack.push(c);
             }else if(c==')'){
@@ -55,15 +55,17 @@ public class InfixToPostFix {
                 result += c;
             }
         }
+        
+        // en al variable result ya estan todos los numeros
         for (int i = 0; i <=stack.size() ; i++) {
-            result += stack.pop();
+            result = result + " " + stack.pop();
         }
         return result;
     }
     static Double evalPostfix(String[] exp)
    {
       // base case
-      if (exp == null || exp.length ==0 ) {
+      if (exp == null || exp.length <0 ) {
          System.exit(-1);
       }
 
@@ -90,11 +92,13 @@ public class InfixToPostFix {
             // result back to the stack
             if (exp[i].contains("+")) {
                stack.push(y + x);
+              
             }
             else if (exp[i].contains("-")) {
                stack.push(y - x);
             }
             else if (exp[i].contains("*")) {
+               
                stack.push(y * x);
             }
             else if (exp[i].contains("/")) {
@@ -125,7 +129,7 @@ public class InfixToPostFix {
       return true;
    }
     public static void main(String[] args) {
-        String exp = "5 * 3 / 8 + ( 95 % 5 - 10 )"+" ";                                            //( 5 * 7 ) + ( 12 / 6 )        //5 * 3 / 8 + ( 95 % 5 - 10 ) 
+        String exp = " " + "( 5 * 7 ) + ( 12 / 6 )"+" ";                                            //( 5 * 7 ) + ( 12 / 6 )        //5 * 3 / 8 + ( 95 % 5 - 10 ) 
         System.out.println("Infix Expression: " + exp);
         System.out.println("Postfix Expression: " + infixToPostFix(exp));
         
