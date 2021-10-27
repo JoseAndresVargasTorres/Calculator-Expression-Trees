@@ -36,7 +36,7 @@ public class Server extends javax.swing.JFrame {
         try{
             initComponents();
             ss=new ServerSocket(2089);
-            this.sStatus.setText("Servidor iniciado");
+            this.sStatus.setText("Server started");
             
             new ClientAccept().start();
         
@@ -98,7 +98,7 @@ public class Server extends javax.swing.JFrame {
                     if (input.contains("12345678")) {
                         input = input.substring(8);
                         List<String> realinput = Arrays.asList(input.split(":"));                        
-                        msgBox.append("< El cliente " + realinput.get(0) + ", quiere calcular la siguiente expresión> " + realinput.get(1)+"\n");
+                        msgBox.append("< The client " + realinput.get(0) + ", wants to calculate the following expression> " + realinput.get(1)+"\n");
                         String infix  = realinput.get(1)+" ";
                         String exp2 = infixToPostFix(infix);
                         String pel = exp2.replaceAll("\\s+", " ");
@@ -341,6 +341,8 @@ public class Server extends javax.swing.JFrame {
         sStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(153, 255, 153));
 
         msgBox.setColumns(20);
         msgBox.setRows(5);
