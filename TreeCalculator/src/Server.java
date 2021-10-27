@@ -246,7 +246,7 @@ public class Server extends javax.swing.JFrame {
             }else if(c==')'){
                 char x = stack.pop();
                 while(x!='('){
-                    result += x;
+                    result = result + " "+ x;
                     x = stack.pop();
                 }
             }else if(c=='('){
