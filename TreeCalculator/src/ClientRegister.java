@@ -4,15 +4,14 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 import javax.swing.JOptionPane;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
- *
- * @author DELL
+ * ClientRegister
+ * This class is responsible for registering clients
+ * and connecting to the server.
+ *@author Carlos Contreras
+ *@author José Vargas
+ *@author Nicol Otárola
  */
 public class ClientRegister extends javax.swing.JFrame {
     static String info;
@@ -111,7 +110,11 @@ public class ClientRegister extends javax.swing.JFrame {
     private void idTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idTextActionPerformed
-
+    
+    /**
+     * This method makes users sign in and creates a new connection socket
+     * @param evt 
+     */
     private void idButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idButtonActionPerformed
         
         try {

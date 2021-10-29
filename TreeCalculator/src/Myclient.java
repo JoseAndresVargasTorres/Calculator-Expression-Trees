@@ -9,15 +9,14 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 /**
- *
- * @author DELL
+ * Myclient
+ * Allows communication with the server 
+ *@author Carlos Contreras
+ * @author José Vargas
+ * @author Nicol Otárola
  */
 public class Myclient extends javax.swing.JFrame {
     String ID,clientID="";//NOMBRE
@@ -47,8 +46,15 @@ public class Myclient extends javax.swing.JFrame {
         }
 
     }
+    
+    /**
+     * The class Read creates a Thread that defines the run method
+     */
     class Read extends Thread {
-
+        
+        /**
+         * This method allows to read the information that the client receives.
+         */
         public void run() {
             while (true) {
                 try {
@@ -174,10 +180,11 @@ public class Myclient extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(idlabel)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(idlabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,27 +215,36 @@ public class Myclient extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+   
+    /**
+     * This method is used to close the windows
+     * @param evt 
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt){
         String i="mkoihgteazdcvgyhujb096785542AXTY";
         try{
             dout.writeUTF(i);
-            this.dispose();
+            this.dispose(); //Destroy window
         }catch(IOException ex){
             Logger.getLogger(Myclient.class.getName()).log(Level.SEVERE,null,ex);
         }
     }
 
-    private void selectallActionPerformed(java.awt.event.ActionEvent evt){
+    /**private void selectallActionPerformed(java.awt.event.ActionEvent evt){
         clientID="";
-    }
+    }/*
+    
+    /**
+     * Method that allows you to send client information to the server
+     * @param evt 
+     */
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         // TODO add your handling code here:
 
             try {
-                String m = sendText.getText(), mm = m;//hola
+                String m = sendText.getText(), mm = m;
 
-                dout.writeUTF("12345678" + ID + ":" + m);//hola soy jose
+                dout.writeUTF("12345678" + ID + ":" + m);
                 sendText.setText("");
                 msgBox.append("< YOU to Server > " + mm + "\n");
 

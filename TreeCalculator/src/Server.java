@@ -15,20 +15,20 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.*;
 import javax.swing.JOptionPane;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 /**
- *
- * @author DELL
+ *Server:
+ *In this class the server, contain the factor of connection
+ *and function for calculated the expressions 
+ * @author Carlos Contreras
+ * @author José Vargas
+ * @author Nicol Otárola
  */
 public class Server extends javax.swing.JFrame {
 
     /**
-     * Creates new form Server
+     * Method creates new form Server
      */
     ServerSocket ss;
     HashMap clientColl=new HashMap();
@@ -44,6 +44,12 @@ public class Server extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
+    /**
+     * The ClientAccep class contains the execute method which
+     * is responsible for accepting the connection from multiple 
+     * clients and keeping the read and write methods active
+     * @throws I0Ex
+     */
     class ClientAccept extends Thread{
         public void run(){
             while(true){
@@ -69,6 +75,9 @@ public class Server extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * MsgRead creates a Thread that defines the run method
+     */
     class MsgRead extends Thread{
         Socket s;
         String ID;
@@ -79,7 +88,11 @@ public class Server extends javax.swing.JFrame {
         }
         
                         
-        
+        /**
+         * Method to read the data entered in the text spaces and
+         * save in the CSV document the information received 
+         * @throws IOException
+         */
         public void run(){
             
     
@@ -116,9 +129,8 @@ public class Server extends javax.swing.JFrame {
                         }        
                         
                         
-                        //Save in the CSV document the information received 
+                         
                         //saveRecord(date,realinput.get(0),realinput.get(1),result,filepath);
-                        //la parte de los arboles expresion
                         Set k = clientColl.keySet();
                         //System.out.println(k);
                         
@@ -165,7 +177,14 @@ public class Server extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * PrepareClientList creates a Thread that defines the run method
+     */
     class PrepareClientList extends Thread{
+        
+        /**
+         * This method create the clients list 
+         */
         public void run(){
             try{
                 String ids="";
@@ -198,6 +217,14 @@ public class Server extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * This method is responsible for saving the data record 
+     * @param Date
+     * @param name
+     * @param exp
+     * @param result
+     * @param filepath 
+     */
     public static void saveRecord(String Date, String name, String exp, String result, String filepath){
         
         try{
@@ -216,6 +243,12 @@ public class Server extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Method that is responsible for returning 
+     * the order of precedence of the operators
+     * @param c
+     * @return priority number
+     */
     static int precedence(char c){
         switch (c){
             case '+':
@@ -230,6 +263,12 @@ public class Server extends javax.swing.JFrame {
         }
         return -1;
     }
+    
+    /**
+     * This method convert given infix expression to postfix expression.
+     * @param expression
+     * @return postfix expression
+     */
     static String infixToPostFix(String expression){
 
         String result = "";
@@ -261,6 +300,11 @@ public class Server extends javax.swing.JFrame {
         }
         return result;
     }
+    /**
+     * Method that evaluates a given postfix expression
+     * @param exp
+     * @return expression result
+     */
     static Double evalPostfix(String[] exp)
    {
       // base case
@@ -314,6 +358,12 @@ public class Server extends javax.swing.JFrame {
       return stack.pop();
    }
     
+    /**
+     * Method that verifies that the string is numeric, in this case
+     * it is checking that the values are of type Double.
+     * @param strNum
+     * @return boolean
+     */
     static boolean isNumeric(String strNum) {
       if (strNum == null) {
          return false;
