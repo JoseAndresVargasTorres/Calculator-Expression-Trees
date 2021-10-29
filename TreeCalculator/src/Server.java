@@ -112,21 +112,13 @@ public class Server extends javax.swing.JFrame {
                         input = input.substring(8);
                         List<String> realinput = Arrays.asList(input.split(":"));                        
                         msgBox.append("< The client " + realinput.get(0) + ", wants to calculate the following expression> " + realinput.get(1)+"\n");
-                        String infix  = realinput.get(1)+" ";
-                        String exp2 = infixToPostFix(infix);
-                        String pel = exp2.replaceAll("\\s+", " ");
-                        String[] exparray = pel.split(" ");                        
-                        if(exparray[0]== ""){
-                            System.out.println("hola");
-                            String[] modifiedArray = Arrays.copyOfRange(exparray, 1, exparray.length);
-                            String result = Double.toString(evalPostfix(modifiedArray));
-                            output.writeUTF("recibo"+result);
-                            saveRecord(date,realinput.get(0),realinput.get(1),result,filepath);
-                        }else{
-                            String result = Double.toString(evalPostfix(exparray));
-                            output.writeUTF("recibo"+result);
-                            saveRecord(date,realinput.get(0),realinput.get(1),result,filepath);
-                        }        
+                        
+                        ExpressionTree tree = new ExpressionTree(realinput.get(1));
+                        
+                        
+                        String result = Double.toString(tree.eval());
+                        output.writeUTF("recibo"+result);
+                        saveRecord(date,realinput.get(0),realinput.get(1),result,filepath);
                         
                         
                          

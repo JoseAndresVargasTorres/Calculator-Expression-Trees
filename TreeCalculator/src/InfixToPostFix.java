@@ -63,7 +63,7 @@ public class InfixToPostFix {
         return result;
     }
     static Double evalPostfix(String[] exp)
-   {
+   {//1 23 +
       // base case
       if (exp == null || exp.length <0 ) {
          System.exit(-1);
