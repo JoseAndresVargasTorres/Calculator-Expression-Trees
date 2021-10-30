@@ -1,10 +1,21 @@
+package Treepackage;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author jose
+ */
 import java.util.ArrayList;
 
 public class MathParser {
 
     private final String expr;
-    private final static char[] operators = {'+', '-', '/', '*', '(', ')', '^'};
+    private final static char[] operators = {'+', '-', '/', '*', '(', ')', '%'};
 
     public MathParser(String expr) {
         this.expr = expr;

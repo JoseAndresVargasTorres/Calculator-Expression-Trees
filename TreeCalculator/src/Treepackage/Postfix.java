@@ -1,4 +1,16 @@
+package Treepackage;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author jose
+ */
+import Treepackage.MathParser;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -25,7 +37,7 @@ public class Postfix {
     // converts postfix tokens into a string
     private static String convertPostTkns(ArrayList<String> postfixTkns) {
         if(postfixTkns.isEmpty())
-            return "";
+            return " ";
 
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < postfixTkns.size()- 1; i++)
@@ -81,12 +93,14 @@ public class Postfix {
             // put it in the postfix expression
             if(!isOperator(token)) {
                 postfix.add(token);
+                System.out.println("Token equals:   "+token);
             }
 
             // if the token is an opening parentheses,
             // just push it onto the stack
             else if(token.equals("(")) {
                 stack.push(token);
+
             }
 
             // if the token is a closing parentheses,
@@ -105,8 +119,9 @@ public class Postfix {
             // if it is, pop the stack into postfix until it isn't
             // then push our token to the top of the stack
             else {
-                while(!stack.isEmpty() && (prec(stack.peek()) > prec(token)) && !stack.peek().equals("(")) {
+                while(!stack.isEmpty() && (prec(stack.peek()) >= prec(token)) && !stack.peek().equals("(")) {
                     postfix.add(stack.pop());
+                    //System.out.println("Token number equals     ");
                 }
 
                 stack.push(token);
@@ -120,7 +135,7 @@ public class Postfix {
             postfix.add(stack.pop());
         }
 
-        return postfix;
+        return postfix ;
     }
 
 
@@ -131,10 +146,11 @@ public class Postfix {
                 return 7;
             case "==": case "!=":
                 return 6;
-            case "^":
-                return 5;
+            case "%":
+                return 4;
             case "*": case "/":
                 return 4;
+            
             case "+": case "-":
                 return 3;
             case "&&":
@@ -154,7 +170,8 @@ public class Postfix {
                         || str.equals("-")
                         || str.equals("*")
                         || str.equals("/")
-                        || str.equals("^")
+                        || str.equals("%")
+                        
                         || str.equals("(")
                         || str.equals(")")
                         || str.equals("=")

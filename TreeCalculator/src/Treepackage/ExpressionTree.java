@@ -1,4 +1,15 @@
+package Treepackage;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author jose
+ */
 import java.util.Stack;
 
 public class ExpressionTree {
@@ -6,7 +17,7 @@ public class ExpressionTree {
     private String infixExpr;
     private String postfixExpr;
 
-    ExpressionTree(String expr) {
+    public ExpressionTree(String expr) {
         this.infixExpr = expr;
         this.head = buildTree();
         this.postfixExpr = Postfix.convert(expr);
@@ -132,8 +143,9 @@ public class ExpressionTree {
                 value = left / right;
                 break;
             case POW:
-                value = Math.pow(left, right);
+                value = left % right;
                 break;
+            
             default: value = 0;
         }
 
@@ -150,4 +162,3 @@ public class ExpressionTree {
     }
 
 }
-

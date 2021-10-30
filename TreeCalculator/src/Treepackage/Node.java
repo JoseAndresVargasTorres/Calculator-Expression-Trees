@@ -1,3 +1,15 @@
+package Treepackage;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author jose
+ */
 public class Node {
     public static enum Operation {ADD, SUB, MUL, DIV, POW, NONE};
     public static enum Type {LIST, DIGIT};
@@ -54,8 +66,9 @@ public class Node {
                 return Operation.MUL;
             case "/":
                 return Operation.DIV;
-            case "^":
+            case "%":
                 return Operation.POW;
+            
             default:
                 return Node.Operation.NONE;
         }
