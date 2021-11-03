@@ -1,14 +1,8 @@
 package Treepackage;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
- * @author jose
+ *The node class is in charge of managing the nodes according
+ *to location, if it is a number or an operator
  */
 public class Node {
     public static enum Operation {ADD, SUB, MUL, DIV, POW, NONE};
@@ -43,19 +37,34 @@ public class Node {
     Node(Node parent, Node left, Node right, Double operand) {
         this(parent, left, right, Operation.NONE, Type.DIGIT, operand);
     }
-
+    
+    /**
+     * This method is in charge of verifying if it is a digit
+     */
     public boolean isDigit() {
         return this.type == Type.DIGIT;
     }
-
+    
+    /**
+     * This method is in charge of verifying if it is a operator
+     */
     public boolean isOperator() {
         return this.type == Type.LIST;
     }
 
+    /**
+     * This method is in charge of verifying if the node is on
+     * the left side
+     */
     public boolean isLeaf() {
         return (left == null && right == null);
     }
 
+    /**
+     * It is responsible for defining the type of operator
+     * @param operator
+     * @return type of operator
+     */
     protected static Operation evalOperator(String operator) {
         switch(operator) {
             case "+":
@@ -75,6 +84,10 @@ public class Node {
     }
 
     @Override
+    /**
+     * This method determines if the string 
+     * corresponds to a digit or an operator
+     */
     public String toString() {
         String str = "";
 

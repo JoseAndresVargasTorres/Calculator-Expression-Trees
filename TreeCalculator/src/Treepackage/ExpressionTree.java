@@ -1,17 +1,14 @@
 package Treepackage;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author jose
- */
 import java.util.Stack;
 
+/**
+ * The ExpressionTree class is responsible
+ * for evaluating expressions in the tree.
+ *@author Carlos Contreras
+ *@author José Vargas
+ *@author Nicol Otárola
+ */
 public class ExpressionTree {
     private Node head;
     private String infixExpr;
@@ -23,14 +20,20 @@ public class ExpressionTree {
         this.postfixExpr = Postfix.convert(expr);
     }
 
-    // method for creating a new expression tree, destroys old one
+    /**
+     * This Method for creating a new expression tree, destroys old one
+    * @param expr 
+    */
     public void newExpr(String expr) {
         this.infixExpr = expr;
         this.head = buildTree();
         this.postfixExpr = Postfix.convert(expr);
     }
 
-    // builds the syntax tree for a given expression
+    /**
+     * This method builds the syntax tree for a given expression
+     * @return root of the tree
+     */
     private Node buildTree() {
         Postfix postfix = new Postfix(infixExpr);
         if(!postfix.isValidExpr())
@@ -89,14 +92,22 @@ public class ExpressionTree {
         return root;
     }
 
-    // returns either an ancestor of n, or n itself
+    /**
+     *The findIncompleteParentet method returns the previous
+     * node of n, or the n itself 
+     */
     private Node findIncompleteParent(Node n) {
         while(n.left != null && n.right != null)
             n = n.parent;
         return n;
     }
 
-    // used to examine every node in the tree
+    /**
+     * WalkTree is the method used to walk through all the
+     * nodes in the tree.
+     * @param head
+     * @return new StringBuilder
+     */
     private String walkTree(Node head) {
         StringBuilder sb = new StringBuilder();
 
@@ -110,12 +121,18 @@ public class ExpressionTree {
         return sb.toString();
     }
 
-    // method to evaluate an entire tree
+    /**
+     * Method to evaluate the whole tree
+     * @return head
+     */
     public double eval() {
         return eval(head);
     }
 
-    // method to evaluate a section of a tree
+    /**
+     * Method to evaluate a section of a tree
+     * @param head
+     */
     private double eval(Node head) {
         if(this.isEmpty())
             throw new IllegalStateException("Attempting to eval uninitialized tree.");
@@ -151,12 +168,20 @@ public class ExpressionTree {
 
         return value;
     }
-
+    /**
+     * This method is in charge of verifying if
+     * the head is still empty
+     * @return boolean 
+     */
     public boolean isEmpty() {
         return head == null;
     }
 
     @Override
+    /**
+     * This method is responsible for chaining the data
+     * @return the postfixed expression
+     */
     public String toString() {
         return postfixExpr;
     }

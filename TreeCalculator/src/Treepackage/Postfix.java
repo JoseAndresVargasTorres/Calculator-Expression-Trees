@@ -1,19 +1,13 @@
 package Treepackage;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author jose
- */
 import Treepackage.MathParser;
 import java.util.ArrayList;
 import java.util.Stack;
 
+/**
+ *In this class the infix expression is converted to postfix
+ * @author Usuario
+ */
 public class Postfix {
 
     private final String infixExpr;
@@ -29,12 +23,16 @@ public class Postfix {
     }
 
 
-    // converts an arraylist of postfix tkns into an expression
+    /**
+     *This method converts an arraylist of postfix tkns into an expression
+     */
     private String convertPostTkns() {
         return convertPostTkns(postfixTkns);
     }
 
-    // converts postfix tokens into a string
+    /** This method converts postfix tokens into a string
+     * @param postfixTkns
+     */
     private static String convertPostTkns(ArrayList<String> postfixTkns) {
         if(postfixTkns.isEmpty())
             return " ";
@@ -47,35 +45,59 @@ public class Postfix {
         return sb.toString();
     }
 
-    // returns the postfix expression corresponding to an infix expression
+    /**
+     * This method is responsible for returning the suffix expression to an
+     * infix expression
+     * @param infixExpr 
+     */
     public static String convert(String infixExpr) {
         return convertPostTkns(convertToPostfix(infixExpr));
     }
 
-    // returns the postfix expression corresponding to an infix expression as
-    // an ArrayList of tokens
+    /**
+     * ArrayList takes care of returning the suffix expression to an infix
+     * expression as an ArrayList of tokens
+     * @param infixExpr 
+     */
     public static ArrayList<String> convertTkns(String infixExpr) {
         return convertToPostfix(infixExpr);
     }
 
     // getters
+    /**
+     * Get postfix expression
+     */
     public String getPostExpr() {
         return this.postfixExpr;
     }
 
+    /**
+     * Get infix expression
+     */
     public String getInExpr() {
         return this.infixExpr;
     }
-
+    
+    /**
+     * Get infix token
+     */
     public ArrayList<String> getInTkns() {
         return this.infixTkns;
     }
 
+    /**
+     * Get postfix token
+     */
     public ArrayList<String> getPostTkns() {
         return this.postfixTkns;
     }
 
-    // converts an infix expression to postfix expr as an ArrayList of tokens
+    /**
+     * This method is in charge of converting an infix expression into
+     * a postfix expression as an ArrayList of tokens
+     * @param expr
+     * @return postfix expression
+     */
     private static ArrayList<String> convertToPostfix(String expr) {
         // if expr is empty or null, return an empty ArrayList
         if(expr == null || expr.equals(""))
@@ -139,7 +161,12 @@ public class Postfix {
     }
 
 
-    // returns -1 if token passed to it is not an operator
+    /**
+     * Method that is responsible for returning 
+     * the order of precedence of the operators
+     * @param token
+     * @return priority number
+     */
     private static int prec(String token) {
         switch(token) {
             case "(": case ")":
@@ -163,7 +190,11 @@ public class Postfix {
         }
     }
 
-    // returns whether a given token is an operator
+    /**
+     * This method is responsible for returning if a given
+     * token is an operator
+     * @param str
+     */
     public static boolean isOperator(String str) {
         return
                 str.equals("+")
@@ -180,7 +211,11 @@ public class Postfix {
                         || str.equals("&&");
     }
 
-    // checks if postfix expression is valid
+    /**
+     * This method takes care of checking if the postfix
+     * expression is valid
+     * @return 
+     */
     public boolean isValidExpr() {
         int operators = 0, operands = 0;
 
@@ -226,7 +261,11 @@ public class Postfix {
         return true;
     }
 
-    // tokenize an expression into an ArrayList
+    /**
+     * This method takes care of tokenizing
+     * an expression in an ArrayList
+     * @param expr
+     */
     private static ArrayList<String> tokenizeExpr(String expr) {
         if(expr == null)
             return null;

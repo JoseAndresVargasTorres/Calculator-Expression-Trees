@@ -132,11 +132,7 @@ public class ClientRegister extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-        }
-
-        
-        
-        
+        }        
     }//GEN-LAST:event_idButtonActionPerformed
 
     /**
