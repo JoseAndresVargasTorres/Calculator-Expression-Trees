@@ -115,7 +115,7 @@ public class Postfix {
             // put it in the postfix expression
             if(!isOperator(token)) {
                 postfix.add(token);
-                System.out.println("Token equals:   "+token);
+                
             }
 
             // if the token is an opening parentheses,
@@ -143,7 +143,7 @@ public class Postfix {
             else {
                 while(!stack.isEmpty() && (prec(stack.peek()) >= prec(token)) && !stack.peek().equals("(")) {
                     postfix.add(stack.pop());
-                    //System.out.println("Token number equals     ");
+                    
                 }
 
                 stack.push(token);

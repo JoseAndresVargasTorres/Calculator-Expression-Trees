@@ -106,7 +106,7 @@ public class Server extends javax.swing.JFrame {
                     String input = new DataInputStream(s.getInputStream()).readUTF();
                     DataOutputStream output =new DataOutputStream(s.getOutputStream());
                     String expresion = input;
-                    System.out.println(expresion);
+                    //System.out.println(expresion);
                     
                     
                     if (input.contains("12345678")) {
