@@ -164,7 +164,7 @@ public class Server extends javax.swing.JFrame {
                         }
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             }
         }
