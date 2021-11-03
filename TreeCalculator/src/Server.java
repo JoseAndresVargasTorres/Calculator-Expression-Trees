@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
 import java.util.*;
 import javax.swing.JOptionPane;
 
-
+//*********
 /****
  *Server:
  *In this class the server, contain the factor of connection
