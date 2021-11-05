@@ -200,7 +200,7 @@ public class Server extends javax.swing.JFrame {
                         new DataOutputStream(((Socket)clientColl.get(key)).getOutputStream()).writeUTF(":;.,/="+ids);
                     }catch(Exception ex){
                         clientColl.remove(key);
-                        msgBox.append(key+": removed!");
+                        msgBox.append(key+": removed!\n");
                   
                     }
                 }
