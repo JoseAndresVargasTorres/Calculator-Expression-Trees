@@ -138,7 +138,7 @@ public class Myclient extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(UL);
 
-        jLabel2.setText("Enter the expression leaving a space between each symbol and number");
+        jLabel2.setText("Enter the expression in the msg Textbox");
 
         jLabel4.setText("Clients connected");
 

@@ -194,7 +194,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Enter the expression leaving a space between each symbol and number"/>
+            <Property name="text" type="java.lang.String" value="Enter the expression in the msg Textbox"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
